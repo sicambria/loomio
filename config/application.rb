@@ -54,12 +54,6 @@ module Loomio
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.4'
-
-    config.action_mailer.default_url_options = {
-      host:     ENV['CANONICAL_HOST'],
-      protocol: ENV['FORCE_SSL'] ? 'https' : 'http'
-    }
-
     config.roadie.url_options = nil
 
     # required for heroku
@@ -87,5 +81,32 @@ module Loomio
         fog_public: true
       }
     end
+
+    config.force_ssl = ENV.has_key?('FORCE_SSL')
+    config.action_mailer.raise_delivery_errors = true
+    config.action_mailer.perform_deliveries = true
+
+    if ENV['SMTP_SERVER']
+      config.action_mailer.delivery_method = :smtp
+      config.action_mailer.smtp_settings = {
+        address: ENV['SMTP_SERVER'],
+        port: ENV['SMTP_PORT'],
+        authentication: ENV['SMTP_AUTH'],
+        user_name: ENV['SMTP_USERNAME'],
+        password: ENV['SMTP_PASSWORD'],
+        domain: ENV['SMTP_DOMAIN'],
+        openssl_verify_mode: 'none'
+      }.compact
+    else
+      config.action_mailer.delivery_method = :test
+    end
+
+    config.action_mailer.default_url_options = {
+      host:     ENV['CANONICAL_HOST'],
+      port:     ENV['CANONICAL_PORT'],
+      protocol: ENV['FORCE_SSL'] ? 'https' : 'http'
+    }.compact
+
+    config.action_mailer.asset_host = (ENV['FORCE_SSL'] ? 'https://' : 'http://') + ENV['CANONICAL_HOST']
   end
 end
