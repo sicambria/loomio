@@ -1,4 +1,4 @@
-angular.module('loomioApp').controller 'GroupPageController', ($rootScope, $location, $routeParams, Records, CurrentUser, MessageChannelService, AbilityService, AppConfig, LmoUrlService, PaginationService, ModalService, SubscriptionSuccessModal, GroupWelcomeModal, LegacyTrialExpiredModal) ->
+angular.module('loomioApp').controller 'GroupPageController', ($rootScope, $location, $routeParams, Records, CurrentUser, MessageChannelService, AbilityService, AppConfig, LmoUrlService, PaginationService, ModalService, SubscriptionSuccessModal, GroupWelcomeModal) ->
   $rootScope.$broadcast 'currentComponent', {page: 'groupPage'}
 
   # allow for chargify reference, which comes back #{groupKey}|#{timestamp}
@@ -7,12 +7,10 @@ angular.module('loomioApp').controller 'GroupPageController', ($rootScope, $loca
     @group = group
 
     if AbilityService.isLoggedIn()
-      $rootScope.$broadcast 'trialIsOverdue', @group if @group.trialIsOverdue()
       MessageChannelService.subscribeToGroup(@group)
       Records.drafts.fetchFor(@group)
       @handleSubscriptionSuccess()
       @handleWelcomeModal()
-      LegacyTrialExpiredModal.showIfAppropriate(@group, CurrentUser)
 
     @pageWindow = PaginationService.windowFor
       current:  parseInt($location.search().from or 0)
@@ -60,13 +58,12 @@ angular.module('loomioApp').controller 'GroupPageController', ($rootScope, $loca
     @group.isParent() and
     AbilityService.isCreatorOf(@group) and
     @group.noInvitationsSent() and
-    !@group.trialIsOverdue() and
     !@subscriptionSuccess and
-    !GroupWelcomeModal.shownToGroup[@group.id]
+    GroupWelcomeModal.shownToGroup[@group.id]
 
   @handleWelcomeModal = =>
     if @showWelcomeModel()
       GroupWelcomeModal.shownToGroup[@group.id] = true
-    #  ModalService.open GroupWelcomeModal
+      ModalService.open GroupWelcomeModal
 
   return
