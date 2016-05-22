@@ -67,6 +67,6 @@ angular.module('loomioApp').controller 'GroupPageController', ($rootScope, $loca
   @handleWelcomeModal = =>
     if @showWelcomeModel()
       GroupWelcomeModal.shownToGroup[@group.id] = true
-      ModalService.open GroupWelcomeModal
+    #  ModalService.open GroupWelcomeModal
 
   return
