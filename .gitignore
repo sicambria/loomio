@@ -38,3 +38,6 @@ plugins/Gemfile
 
 angular/node_modules
 angular/tasks/config/plugins.yml
+
+!plugins/loomio_tags
+!plugins/loomio_thread_owner
