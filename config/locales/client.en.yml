@@ -46,8 +46,8 @@ en:
       cancel: 'Cancel'
       show_more: "Show more"
       view_all: "View All"
-      new_thread: "New discussion"
-      add_subgroup: 'Add New Feature'
+      new_thread: "New thread"
+      add_subgroup: 'Add Feature'
       loading: 'Loading'
       translate: 'Translate'
       translated: 'Translation by Bing Translator'
@@ -109,7 +109,7 @@ en:
       loud_description: "You will be emailed whenever there is activity in this thread."
       normal_description: "You will be emailed whenever a proposal is started, about to close, or an outcome is posted."
       quiet_description: "You won't be emailed about this thread."
-      apply_to_all: "Apply this settings to all threads in this group."
+      apply_to_all: "Apply these settings to all threads in this group."
       messages:
         loud: "You will be emailed activity in this thread."
         normal: "You will be emailed about proposals in this thread."
@@ -119,7 +119,7 @@ en:
       loud_description: "You will be emailed whenever there is activity in this group."
       normal_description: "You will be emailed about new threads and proposals in this group."
       quiet_description: "You won't be emailed about activity in this group."
-      apply_to_all: "Apply this settings to all my groups."
+      apply_to_all: "Apply these settings to all my groups."
       messages:
         loud: "You will be emailed all activity in this group."
         normal: "You will be emailed about new threads and proposals in this group."
@@ -134,7 +134,7 @@ en:
       loud_description: "You will be emailed whenever there is activity in any new groups you join."
       normal_description: "You will be emailed about new threads and proposals in any new groups you join."
       quiet_description: "You won't be emailed about activity in any new groups you join."
-      apply_to_all: "Apply this settings to all my groups."
+      apply_to_all: "Apply these settings to all my groups."
       messages:
         loud: "You will be emailed all activity in new groups."
         normal: "You will be emailed about new threads and proposals in new groups."
@@ -152,16 +152,26 @@ en:
     unread: 'Unread'
     closing_in: 'Closing '
 
-  session_form:
+  sign_in_form:
+    title: 'Sign In to Loomio'
     email_label: 'Email:'
+    email_placeholder: 'you@example.com'
     password_label: 'Password:'
-    remember_me: 'Remember Me'
+    remember_me: 'Remember me'
+    forgot_password: 'Forgot password?'
     sign_in: 'Login'
+    signed_in: 'Signed in successfully'
+    oauth:
+      title: 'Or log in with a third-party account:'
+      facebook: 'Log in with Facebook'
+      twitter: 'Log in with Twitter'
+      google: 'Log in with Google'
+      github: 'Log in with Github'
 
   comment_form:
     aria_label: 'Add a comment'
     attachments:
-      aria_label: 'Attach a file'
+      add_attachment: 'Attach a file'
       remove_attachment: 'Remove attachment'
     messages:
       created: 'Comment added'
@@ -178,6 +188,7 @@ en:
       label: 'Post'
     private_privacy_notice: 'Your comment will only be visible to members of {{groupName}}.'
     public_privacy_notice: 'Your comment will be visible to anyone on the web.'
+    sign_in: "Log in to join the conversation"
 
   navbar:
     recent: 'Recent'
@@ -211,7 +222,7 @@ en:
   start_menu:
     title: 'Action button'
     start_group: 'Start Group'
-    start_subgroup: 'Start Subgroup'
+    start_subgroup: 'Create Feature'
     start_thread: 'Start Thread'
     invite_people: 'Invite People'
 
@@ -362,9 +373,12 @@ en:
     ok_got_it: "Ok, got it!"
 
   group_welcome_modal:
-    heading: "Welcome to your new group"
-    first_step: "You are the group <strong>coordinator</strong>, which is like being a host. Watch the video, then check out the example threads."
-    second_step: "When you’re ready, <strong>invite people</strong> in."
+
+    creator_heading: "Welcome to your new group"
+    member_heading: "Welcome to Loomio"
+    creator_info: "You are the group <strong>coordinator</strong>, which is like being a host. Watch the video, then check out the example threads."
+    member_info: "Watch this video for an overview of how Loomio works. Then try posting a comment in a discussion thread, or start one of your own!"
+    creator_footer: "When you’re ready, <strong>invite people</strong> in."
     ok_got_it: "Ok, got it!"
 
   group_cover_modal:
@@ -384,6 +398,7 @@ en:
   join_group_button:
     join_group: Join group
     ask_to_join_group: Ask to join group
+    membership_requested: Membership request pending
     messages:
       joined_group: 'You are now a member of {{group}}'
 
@@ -424,7 +439,7 @@ en:
       archive_group_success: 'This group has been deactivated'
     group_logo: 'Group logo'
     new_photo: 'new photo'
-    description: 'Description'
+    description: 'Group description'
     description_placeholder: 'Groups coordinators can use this area to describe the group’s purpose, so everyone knows why they are here.'
     discussions: 'Threads'
     discussions_placeholder: 'A thread is where everyone can discuss a topic and make decisions together.'
@@ -432,8 +447,8 @@ en:
     members_placeholder: 'You''re the only one here: invite some people to join you!'
     member_options: Member options
     all_members: All members ({{count}})
-    subgroups: 'List of Features'
-    subgroups_placeholder: 'Subgroups let you break the group up into different teams.'
+    subgroups: 'Features'
+    subgroups_placeholder: 'Features let you break down complex functionality into smaller pieces.'
     invite_people: 'Invite people'
     visibility_label: 'Visibility'
     options_label: 'Options'
@@ -441,7 +456,7 @@ en:
       label: 'Options'
       edit_group: 'Edit Group Settings'
       manage_members: 'Manage Members'
-      add_subgroup: 'Add Subgroup'
+      add_subgroup: 'Add Feature'
       manage_subscription: 'Manage Group Subscription'
       email_settings: 'Email settings'
       leave_group: 'Leave Group'
@@ -539,12 +554,12 @@ en:
 
   group_form:
     start_group_heading: 'Start a group'
-    start_subgroup_heading: 'Start a subgroup'
+    start_subgroup_heading: 'Create a new Feature'
     edit_group_heading: 'Edit group settings'
-    edit_subgroup_heading: 'Edit subgroup settings'
+    edit_subgroup_heading: 'Edit Feature'
     group_name: 'Group Name'
     group_name_placeholder: 'What do you want to call your group?'
-    subgroup_name: 'Subgroup Name'
+    subgroup_name: 'Feature Name'
     description: 'Description'
     description_placeholder: 'Describe the purpose of your group so your group members know why they are here.'
     privacy_statement:
@@ -556,16 +571,16 @@ en:
     group_privacy_is_closed_description: "anyone can find the group and ask to join. Only members can see who is in the group. All threads are private."
     group_privacy_is_closed_public_threads_description: "anyone can find the group and ask to join. Only members can see who is in the group. Threads can be public or private."
     group_privacy_is_secret_description: 'only invited members can find the group, see who is in it and see threads.'
-    confirm_change_to_secret: "If you proceed, all threads in this group and its subgroups will be made private."
+    confirm_change_to_secret: "If you proceed, all threads in this group and its features will be made private."
     confirm_change_to_secret_subgroup: 'If you proceed, all threads will be made private.'
     confirm_change_to_public: 'If you proceed, all threads in this group will be made public on the web.'
     confirm_change_to_private_discussions_only: 'If you proceed, any public threads in this group will be made private.'
 
-    subgroup_privacy_is_open_description: "anyone can find this subgroup and ask to join. Only members can see who is in the group. All threads are public."
-    subgroup_privacy_is_closed_description: "anyone can find this subgroup and ask to join. Only members can see who is in the group. All threads are private."
-    subgroup_privacy_is_closed_public_threads_description: "anyone can find this subgroup and ask to join. Only members can see who is in the group. Threads can be public or private."
-    subgroup_privacy_is_closed_secret_parent_description: "members of {{parent}} can find this subgroup and ask to join. All threads are private. Only members can see who is in the group."
-    subgroup_privacy_is_secret_description: 'only invited members can find this subgroup, see who is in it and see threads.'
+    subgroup_privacy_is_open_description: "anyone can find this feature and ask to collaborate. Only members can see who is in the group. All threads are public."
+    subgroup_privacy_is_closed_description: "anyone can find this feature and ask to collaborate. Only members can see who is in the group. All threads are private."
+    subgroup_privacy_is_closed_public_threads_description: "anyone can find this feature and ask to collaborate. Only members can see who is in the group. Threads can be public or private."
+    subgroup_privacy_is_closed_secret_parent_description: "members of {{parent}} can find this feature and ask to collaborate. All threads are private. Only members can see who is in the group."
+    subgroup_privacy_is_secret_description: 'only invited members can find this feature, see who is in it and see threads.'
 
     advanced_settings: "Advanced settings"
     how_do_people_join: "How do people join?"
@@ -585,7 +600,7 @@ en:
     #is_visible_to_parent_members: 'Content is visible to members of {{parentGroupName}}.'
     parent_members_can_see_discussions: 'Members of {{parent}} can see private threads.'
     members_can_add_members: 'Members can invite people and approve requests to join.'
-    members_can_create_subgroups: 'Members can create subgroups.'
+    members_can_create_subgroups: 'Members can create features.'
     members_can_edit_discussions: 'Members can update the context and title of any thread.'
     members_can_edit_comments: 'Members can edit their own comments at any time.'
     members_can_start_discussions: 'Members can start new threads.'
@@ -593,7 +608,7 @@ en:
     members_can_raise_motions: 'Members can start proposals.'
 
     submit_start_group: 'Start group'
-    submit_start_subgroup: 'Start subgroup'
+    submit_start_subgroup: 'Start feature'
     submit_update: 'Update settings'
 
     messages:
@@ -655,9 +670,9 @@ en:
   add_members_modal:
     heading: 'Add people from {{name}}'
     add_members: 'Add members'
-    user_added_to_subgroup: '{{name}} added to Subgroup'
-    users_added_to_subgroup: '{{count}} Users added to Subgroup'
-    no_members_to_add: 'All members of {{parent}} belong to this subgroup'
+    user_added_to_subgroup: '{{name}} added to Feature'
+    users_added_to_subgroup: '{{count}} Users added to Feature'
+    no_members_to_add: 'All members of {{parent}} belong to this Feature'
 
   memberships_page:
     members: 'Members'
@@ -782,6 +797,9 @@ en:
       unread: '{{count}} unread items.'
       current_proposal: 'Current proposal: {{name}}.'
       you_voted: 'You voted: {{position}}.'
+    thread_preview:
+      you_voted: 'You voted {{position}}'
+      undecided: 'You are undecided'
     threads_from:
       group: 'Threads from'
       proposals: 'Proposals'
@@ -902,6 +920,7 @@ en:
     proposal_outcome_updated: 'updated the proposal outcome:'
 
   discussion_edited_item:
+    attachment_ids: 'updated the thread attachments'
     title: 'updated the thread title: <span>{{title}}</span>'
     description: 'updated the thread context'
     description_title: 'updated the thread title and context'
