@@ -46,8 +46,8 @@ en:
       cancel: 'Cancel'
       show_more: "Show more"
       view_all: "View All"
-      new_thread: "New thread"
-      add_subgroup: 'Add subgroup'
+      new_thread: "New discussion"
+      add_subgroup: 'Add New Feature'
       loading: 'Loading'
       translate: 'Translate'
       translated: 'Translation by Bing Translator'
@@ -424,7 +424,7 @@ en:
       archive_group_success: 'This group has been deactivated'
     group_logo: 'Group logo'
     new_photo: 'new photo'
-    description: 'Group description'
+    description: 'Description'
     description_placeholder: 'Groups coordinators can use this area to describe the group’s purpose, so everyone knows why they are here.'
     discussions: 'Threads'
     discussions_placeholder: 'A thread is where everyone can discuss a topic and make decisions together.'
@@ -432,7 +432,7 @@ en:
     members_placeholder: 'You''re the only one here: invite some people to join you!'
     member_options: Member options
     all_members: All members ({{count}})
-    subgroups: 'Subgroups'
+    subgroups: 'List of Features'
     subgroups_placeholder: 'Subgroups let you break the group up into different teams.'
     invite_people: 'Invite people'
     visibility_label: 'Visibility'
