@@ -5,7 +5,7 @@ threads threads_count, threads_count
 preload_app!
 
 rackup      DefaultRackup
-port        ENV['PORT']     || 3000
+port        ENV['PORT']     || 8000
 environment ENV['RAILS_ENV'] || 'development'
 
 if ENV['LOOMIO_SSL_KEY']
