@@ -607,8 +607,8 @@ en:
     members_can_vote: 'Members can vote on proposals.'
     members_can_raise_motions: 'Members can start proposals.'
 
-    submit_start_group: 'Start group'
-    submit_start_subgroup: 'Start feature'
+    submit_start_group: 'Create group'
+    submit_start_subgroup: 'Create feature'
     submit_update: 'Update settings'
 
     messages:
