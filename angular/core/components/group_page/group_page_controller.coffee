@@ -9,7 +9,6 @@ angular.module('loomioApp').controller 'GroupPageController', ($rootScope, $loca
     if AbilityService.isLoggedIn()
       MessageChannelService.subscribeToGroup(@group)
       Records.drafts.fetchFor(@group)
-      @handleSubscriptionSuccess()
       @handleWelcomeModal()
 
     maxDiscussions = if AbilityService.canViewPrivateContent(@group)
@@ -54,9 +53,7 @@ angular.module('loomioApp').controller 'GroupPageController', ($rootScope, $loca
 
   @showWelcomeModal = ->
     @group.isParent() and
-    Session.user().isMemberOf(@group) and
-    !@group.trialIsOverdue() and
-    !@subscriptionSuccess and
+    Session.user().isMemberOf(@group)
 
   @handleWelcomeModal = =>
     if @showWelcomeModal()
