@@ -69,15 +69,9 @@ cs:
     latest: Nejnovější
     unread: Nepřečteno
     closing_in: Zavřené
-  session_form:
-    email_label: 'Email:'
-    password_label: 'Heslo:'
-    remember_me: Pamatovat si mě
-    sign_in: Přihlásit
   comment_form:
     aria_label: Přidat komentář
     attachments:
-      aria_label: Přiložit soubor
       remove_attachment: Odebrat přílohu
     messages:
       created: Komentář přidán
@@ -91,22 +85,19 @@ cs:
     in_reply_to: 'V reakci na <strong>{{name}}</strong>:'
     submit_button:
       label: Odeslat
-  navbar:
+  sidebar:
     recent: Aktuální
     unread: Nepřečteno
-    groups: Skupiny
+    muted: Ztlumená
+    explore: Prozkoumejte veřejné skupiny
+    edit_profile: Upravit profil
+    email_settings: Nastavení emailu
+    help: Nápověda
+    sign_out: Odhlásit se
+  navbar:
     recent_title: Přejít na ovládací panel
     unread_title: Zobrazit nepřečtené aktivity
-    groups_title: Zobrazit Vaše skupiny
     start_thread: Vytvořit nové vlákno
-    user_options:
-      contact_us: Kontaktujte nás
-      new_thread: Nové vlákno
-      new_group: Nová skupina
-      profile: Profil
-      email_settings: Nastavení emailu
-      help: Nápověda
-      sign_out: Odhlásit se
     search:
       no_results: Nebyly nalezeny žádné vlákna
       close: Zavřít vyhledávací panel
@@ -209,7 +200,6 @@ cs:
   proposal_position_no: Nesouhlasit
   proposal_position_block: Zamítnout
   group_welcome_modal:
-    heading: Vítejte ve své nové skupině
     ok_got_it: 'OK, chápu!'
   group_cover_modal:
     heading: Nová titulní fotka
@@ -277,15 +267,11 @@ cs:
     gift: Dar
     standard: Standardní
     plus: Plus
-    free_trial_html: 'Po uplynutí <span>30-ti denní bezplatné zkušební verze</ span> Vás požádáme, abyste provedly výběr cenového plánu. Není nutná žádná kreditní karta.'
+    free_trial_html: 'Po uplynutí <span>30-ti denní bezplatné zkušební verze</span> Vás požádáme, abyste provedly výběr cenového plánu. Není nutná žádná kreditní karta.'
     unlimited_members: neomezený počet členů
     unlimited_decisions: neomezený počet rozhodnutí
     email_support: e-mailová podpora
-    standard_price_html: |
-      <strong>19$(US)</strong>/měsíčně<br><span>nebo</span> 190$(US)/ročně
     premium_support: prémiová podpora
-    plus_price_html: |
-      <strong>179$(US)</strong>/měsíc<br><span>nebo</span> 1790$(US)/rok
     select: Vybrat
   subscription_success_modal:
     heading: 'Děkujeme vám za zřízení předplatného!'
@@ -391,6 +377,8 @@ cs:
     header: Nastavení emailu
   dashboard_page:
     aria_label: Ovládací panel
+    no_groups:
+      or: nebo
     no_threads:
       show_all: Nemáte žádná aktuální vlákna
       show_participating: Nezúčastnil(a) jste se žádných vláken v poslední době.
@@ -432,6 +420,8 @@ cs:
     no_threads: 'Paráda! Přečetli jste všechny vlákna ve vaší e-mailové schránce.'
     unread_threads: Nepřečtená vlákna
     view_more: Zobrazit více
+    no_groups:
+      or: nebo
   groups_page:
     page_header: Vaše skupiny
   discussion:

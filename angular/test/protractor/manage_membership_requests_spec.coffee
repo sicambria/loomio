@@ -20,7 +20,6 @@ describe 'Managing membership requests', ->
     it 'adds existing users to group upon approval', ->
       membershipRequestsHelper.clickApproveButton()
       membershipRequestsHelper.clickApproveButton()
-      membershipRequestsHelper.clickNavbarGroupLink()
       membershipRequestsHelper.clickGroupName()
       expect(groupsHelper.membersList()).toContain('MVS')
 
@@ -40,6 +39,7 @@ describe 'Managing membership requests', ->
       staticPage.fillIn '#user_password', 'gh0stmovie'
       staticPage.fillIn '#user_password_confirmation', 'gh0stmovie'
       staticPage.click '#create-account'
+      page.click '.group-welcome-modal__close-button'
 
       page.expectText '.group-theme__name', 'Dirty Dancing Shoes'
       page.expectText '.members-card__list', 'JN'

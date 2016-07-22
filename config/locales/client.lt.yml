@@ -47,14 +47,11 @@ lt:
     normal: Normalus
     quiet: Tylus
     mute: Nutildyti
-  session_form:
-    email_label: 'El. paštas:'
-    password_label: 'Slaptažodis:'
-    remember_me: Prisiminti Mane
+  sign_in_form:
+    sign_in: Prisijungti
   comment_form:
     aria_label: Pridėk komentarą
     attachments:
-      aria_label: Pridėti failą
       remove_attachment: Šalinti priedą
     messages:
       created: Komentaras pridėtas
@@ -69,23 +66,15 @@ lt:
     submit_button:
       label: Išsiųsti
     private_privacy_notice: 'Tavo komentaras bus matomas tik {{groupName}} grupės nariams.'
+  sidebar:
+    email_settings: El. pašto nustatymai
+    help: Pagalba
+    sign_out: Atsijungti
   navbar:
-    groups: Grupės
     recent_title: Pereiti į skydelį
     unread_title: Žiūrėti neperskaitytas veiklas
-    groups_title: Žiūrėti savo grupes
     start_thread: Kurti naują giją
     notifications: Pranešimų skydelis
-    user_actions: Naudotojo veiksmai
-    user_options:
-      label: Naudotojo parinktys
-      contact_us: Susisiekti su mumis
-      new_thread: Nauja gija
-      new_group: Nauja grupė
-      profile: Profilis
-      email_settings: El. pašto nustatymai
-      help: Pagalba
-      sign_out: Atsijungti
     search:
       no_results: Gijų nerasta
       loading: Įkeliami rezultatai...
@@ -128,10 +117,8 @@ lt:
     start_a_proposal: Pateikti pasiūlymą
     edit_proposal: Redaguoti pasiūlymą
     what_does_a_proposal_do: 'Pasiūlymai parodo, ką kiekvienas žmogus mano apie tam tikrą veiksmų planą.'
-    title_placeholder: 'Pvz: Skristi į mėnulį'
     title_label: Antraštė
     details_label: Išsamesnė Informacija
-    details_placeholder: 'Suteik pakankamai išsamios informacijos, kad visi žinotų ką tai reiškia ir galėtų pritarti arba nepritarti, arba dar kažką.'
   discussion_form:
     new_discussion_title: Kurti naują giją
     edit_discussion_title: Redaguoti giją
@@ -149,7 +136,6 @@ lt:
   proposal_position_abstain: Susilaikau
   proposal_position_no: Nepritariu
   group_welcome_modal:
-    heading: Sveikiname atvykus į savo naują grupę
     ok_got_it: 'Gerai, supratau!'
   group_cover_modal:
     image_size_helptext: Tobulas paveikslo dydis yra 1400 x 320tšk

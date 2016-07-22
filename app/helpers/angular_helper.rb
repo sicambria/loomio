@@ -40,7 +40,17 @@ module AngularHelper
         groupThreads:      ENV['GROUP_PAGE_SIZE'],
         threadItems:       ENV['THREAD_PAGE_SIZE'],
         exploreGroups:     ENV['EXPLORE_PAGE_SIZE'] || 10
-      }
+      },
+      flashTimeout: {
+        short: (ENV['FLASH_TIMEOUT_SHORT'] || 3500).to_i,
+        long:  (ENV['FLASH_TIMEOUT_LONG']  || 2147483645).to_i
+      },
+      oauthProviders: [
+        ({ name: :facebook, href: user_facebook_omniauth_authorize_path } if ENV['FACEBOOK_KEY']),
+        ({ name: :twitter,  href: user_twitter_omniauth_authorize_path  } if ENV['TWITTER_KEY']),
+        ({ name: :google,   href: user_google_omniauth_authorize_path   } if ENV['OMNI_CONTACTS_GOOGLE_KEY']),
+        ({ name: :github,   href: user_github_omniauth_authorize_path   } if ENV['GITHUB_APP_ID'])
+      ].compact
     }
   end
 

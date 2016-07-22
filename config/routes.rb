@@ -1,6 +1,15 @@
 Loomio::Application.routes.draw do
 
-  use_doorkeeper
+  use_doorkeeper do
+    skip_controllers :applications, :authorized_applications
+  end
+
+  constraints(GroupSubdomainConstraints) do
+    get '/' => 'redirect#group_subdomain'
+    get '/d/:id(/:slug)', to: 'redirect#discussion_key'
+    get '/g/:id(/:slug)', to: 'redirect#group_key'
+    get '/m/:id(/:slug)', to: 'redirect#motion_key'
+  end
 
   root to: 'root#index'
 
@@ -55,6 +64,7 @@ Loomio::Application.routes.draw do
       member do
         post :make_admin
         post :remove_admin
+        post :save_experience
         patch :set_volume
       end
     end
@@ -80,6 +90,7 @@ Loomio::Application.routes.draw do
       post :upload_avatar, on: :collection
       post :change_password, on: :collection
       post :deactivate, on: :collection
+      post :save_experience, on: :collection
     end
 
     resources :events, only: :index
@@ -141,10 +152,6 @@ Loomio::Application.routes.draw do
       post :viewed, on: :collection
     end
 
-    resources :contacts, only: :index do
-      get :import, on: :collection
-    end
-
     resources :contact_messages, only: :create
 
     resources :versions, only: :index
@@ -156,26 +163,12 @@ Loomio::Application.routes.draw do
       get :authorized, on: :collection
     end
 
-    namespace :message_channel do
-      post :subscribe
-    end
-
-    namespace :sessions do
-      get :current
-      get :unauthorized
-    end
+    namespace(:message_channel) { post :subscribe }
+    namespace(:sessions)        { get :unauthorized }
     devise_scope :user do
       resource :sessions, only: [:create, :destroy]
+      resource :registrations, only: :create
     end
-    get '/attachments/credentials',      to: 'attachments#credentials'
-    get  '/contacts/:importer/callback', to: 'contacts#callback'
-  end
-
-  constraints(GroupSubdomainConstraints) do
-    get '/' => 'redirect#group_subdomain'
-    get '/d/:id(/:slug)', to: 'redirect#discussion_key'
-    get '/g/:id(/:slug)', to: 'redirect#group_key'
-    get '/m/:id(/:slug)', to: 'redirect#motion_key'
   end
 
   get '/discussions/:id', to: 'redirect#discussion_id'
@@ -208,16 +201,20 @@ Loomio::Application.routes.draw do
   post :email_processor, to: 'griddler/emails#create'
 
   get '/robots'     => 'robots#show'
+  get '/manifest'   => 'manifest#show', format: :json
 
   get  'start_group' => 'start_group#new'
   post 'start_group' => 'start_group#create'
 
+  get 'g/:key/export'                      => 'groups#export',    as: :group_export
   get 'g/:key(/:slug)'                     => 'groups#show',      as: :group
   get 'd/:key(/:slug)'                     => 'discussions#show', as: :discussion
+  get 'd/:key/comment/(:id)'               => 'discussions#show', as: :comment
   get 'm/:key(/:slug)'                     => 'motions#show',     as: :motion
   get 'u/:username/'                       => 'users#show',       as: :user
 
   get 'dashboard'                          => 'application#boot_angular_ui', as: :dashboard
+  get 'dashboard/:filter'                  => 'application#boot_angular_ui'
   get 'inbox'                              => 'application#boot_angular_ui', as: :inbox
   get 'groups'                             => 'application#boot_angular_ui', as: :groups
   get 'explore'                            => 'application#boot_angular_ui', as: :explore
@@ -234,6 +231,11 @@ Loomio::Application.routes.draw do
   get 'g/:key/memberships'                 => 'application#boot_angular_ui', as: :group_memberships
   get 'g/:key/previous_proposals'          => 'application#boot_angular_ui', as: :group_previous_proposals
   get 'g/:key/memberships/:username'       => 'application#boot_angular_ui'
+
+  get '/notifications/dropdown_items'      => 'application#gone'
+  get '/u/:key(/:stub)'                    => 'application#gone'
+  get '/g/:key/membership_requests/new'    => 'application#gone'
+  get '/comments/:id'                      => 'application#gone'
 
   get '/donate', to: redirect('https://loomio-donation.chargify.com/subscribe/9wnjv4g2cc9t/donation')
 end

@@ -33,7 +33,7 @@ angular.module('loomioApp').factory 'FormService', ($rootScope, FlashService, Dr
     failure = (scope, model, options) ->
       (response) ->
         FlashService.dismiss()
-        model.setErrors response.data.errors                            if response.status == 422
+        model.setErrors response.data.errors                    if _.contains([401,422], response.status)
         $rootScope.$broadcast errorTypes[response.status] or 'unknownError',
           model: model
           response: response
@@ -46,6 +46,7 @@ angular.module('loomioApp').factory 'FormService', ($rootScope, FlashService, Dr
       DraftService.applyDrafting(scope, model, options.draftFields) if options.draftFields and AbilityService.isLoggedIn()
       submitFn = options.submitFn or model.save
       (prepareArgs) ->
+        return if scope.isDisabled
         prepare(scope, model, options, prepareArgs)
         submitFn(model).then(
           success(scope, model, options),

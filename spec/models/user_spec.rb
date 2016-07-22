@@ -10,21 +10,26 @@ describe User do
   let(:group) { create(:group) }
   let(:restrictive_group) { create(:group, members_can_start_discussions: false) }
   let(:admin) { create :user }
-
-  subject do
-    user = User.new
-    user.valid?
-    user
-  end
+  let(:new_user) { build(:user, password: "a_good_password", password_confirmation: "a_good_password") }
 
   it "cannot have invalid avatar_kinds" do
     user.avatar_kind = 'bad'
     user.should have(1).errors_on(:avatar_kind)
   end
 
+  it "should accept a good password with a confirmation" do
+    expect(new_user.valid?).to eq true
+  end
+
+  it "should fail if password confirmation does not match" do
+    new_user.password_confirmation = 'not_the_same'
+    expect(new_user.valid?).to eq false
+  end
+
   it "should require the password to be at least 8 characters long" do
-    user.password = 'PSWD'
-    user.should have(1).errors_on(:password)
+    new_user.password = 'PSWD'
+    new_user.password_confirmation = 'PSWD'
+    expect(new_user.valid?).to eq false
   end
 
   it "should only require the password to be valid when it's being updated" do
@@ -137,6 +142,25 @@ describe User do
   it "sets avatar initials on save" do
     user.should_receive(:set_avatar_initials)
     user.save
+  end
+
+  describe "experienced" do
+
+    it "can store user experiences" do
+      user.experienced!(:happiness)
+      expect(user.experiences[:happiness]).to eq true
+    end
+
+    it "does not store other experiences" do
+      user.experienced!(:frustration)
+      expect(user.experiences[:happiness]).to eq nil
+    end
+
+    it "can forget experiences" do
+      user.update(experiences: { happiness: true })
+      user.experienced!(:happiness, false)
+      expect(user.experiences[:happiness]).to eq false
+    end
   end
 
   describe "deactivation" do

@@ -1,4 +1,4 @@
-angular.module('loomioApp').controller 'GroupPageController', ($rootScope, $location, $routeParams, Records, CurrentUser, MessageChannelService, AbilityService, AppConfig, LmoUrlService, PaginationService, ModalService, SubscriptionSuccessModal, GroupWelcomeModal) ->
+angular.module('loomioApp').controller 'GroupPageController', ($rootScope, $location, $routeParams, Records, CurrentUser, MessageChannelService, AbilityService, AppConfig, LmoUrlService, PaginationService, ModalService, GroupWelcomeModal) ->
   $rootScope.$broadcast 'currentComponent', {page: 'groupPage'}
 
   # allow for chargify reference, which comes back #{groupKey}|#{timestamp}
@@ -12,10 +12,14 @@ angular.module('loomioApp').controller 'GroupPageController', ($rootScope, $loca
       @handleSubscriptionSuccess()
       @handleWelcomeModal()
 
+    maxDiscussions = if AbilityService.canViewPrivateContent(@group)
+      @group.discussionsCount
+    else
+      @group.publicDiscussionsCount
     @pageWindow = PaginationService.windowFor
       current:  parseInt($location.search().from or 0)
       min:      0
-      max:      @group.publicDiscussionsCount
+      max:      maxDiscussions
       pageType: 'groupThreads'
 
     $rootScope.$broadcast 'viewingGroup', @group
@@ -23,6 +27,7 @@ angular.module('loomioApp').controller 'GroupPageController', ($rootScope, $loca
     $rootScope.$broadcast 'analyticsSetGroup', @group
     $rootScope.$broadcast 'currentComponent',
       page: 'groupPage'
+      key: @group.key
       links:
         canonical:   LmoUrlService.group(@group, {}, absolute: true)
         rss:         LmoUrlService.group(@group, {}, absolute: true, ext: 'xml') if !@group.privacyIsSecret()
@@ -47,23 +52,19 @@ angular.module('loomioApp').controller 'GroupPageController', ($rootScope, $loca
   @openUploadLogoForm = ->
     ModalService.open LogoPhotoForm, group: => @group
 
-  @handleSubscriptionSuccess = ->
-    if (AppConfig.chargify or AppConfig.environment == 'development') and $location.search().chargify_success?
-      @subscriptionSuccess = true
-      @group.subscriptionKind = 'paid' # incase the webhook is slow
-      $location.search 'chargify_success', null
-      ModalService.open SubscriptionSuccessModal
-
-  @showWelcomeModel = ->
+  @showWelcomeModal = ->
     @group.isParent() and
-    AbilityService.isCreatorOf(@group) and
-    @group.noInvitationsSent() and
+    Session.user().isMemberOf(@group) and
+    !@group.trialIsOverdue() and
     !@subscriptionSuccess and
-    GroupWelcomeModal.shownToGroup[@group.id]
 
   @handleWelcomeModal = =>
-    if @showWelcomeModel()
-      GroupWelcomeModal.shownToGroup[@group.id] = true
-      ModalService.open GroupWelcomeModal
+    if @showWelcomeModal()
+      ModalService.open GroupWelcomeModal, group: => @group
+      Records.memberships.saveExperience("welcomeModal", Session.user().membershipFor(@group))
+
+  @handlePaymentModal = =>
+    if @showPaymentModal()
+      ModalService.open(ChoosePlanModal, group: => @group)
 
   return

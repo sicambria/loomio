@@ -26,6 +26,7 @@ en:
   errors:
     messages:
       email: Not a valid email address
+      spoofed_media_type: The contents of that file don't match its filename
   attachment:
     error:
       too_large: The file you tried to attach is larger than 50MB, please choose a smaller file.
@@ -768,6 +769,8 @@ en:
   already_have_account: Already have a Loomio account?
   confirm_your_details: Confirm your details
   link_up_your_account: Link up your account
+  create_account: Don't have a Loomio account yet? %{sign_up_link}!
+  sign_up_link: Create one
   log_in_to_your_loomio_account: Log in to your Loomio account to link it up with %{provider_name}.
   now_that_your_logged_in: Now that you've logged in with %{provider_name}, please confirm your details to create a Loomio account.
   confirmation_not_received: Didn't receive confirmation instructions?
@@ -912,7 +915,7 @@ en:
         create: Create account
         update: Update settings
   meta_tags:
-    default_title: Loomio | Collaborative Decision-Making
+    default_title: Loomio | Make Decisions Together
     default_description: Loomio is an easy to use online tool for group decision-making. It allows dispersed groups to reach decisions quickly and take constructive action.
   about_loomio: About Loomio
   ago: "%{quantity_of_time} ago"
@@ -1104,13 +1107,16 @@ en:
   webhooks:
     slack:
       motion_closed: "*%{name}* has closed"
+      motion_closed_by_user: "*%{name}* has been closed by *%{author}*"
       motion_closing_soon: "*%{name}* has a proposal closing in 24 hours"
       motion_outcome_created: "*%{author}* published an outcome in *%{name}*"
       motion_outcome_updated: "*%{author}* updated the outcome for *%{name}*"
       new_motion: "*%{author}* started a new proposal in *%{name}*"
       new_vote: "*%{author}* %{position} *%{proposal}* in *%{name}*"
+      new_comment: "*%{author}* posted a new comment in *%{name}*"
       new_discussion: "*%{author}* started a new discussion in *%{group}*"
       view_it_on_loomio: View it on Loomio
+      have_your_say: Have your say
       position_verbs:
         'yes': agreed on
         'no': disagreed on

@@ -35,6 +35,11 @@ angular.module('loomioApp').factory 'GroupModel', (DraftableModel, AppConfig) ->
       @hasMany 'subgroups', from: 'groups', with: 'parentId', of: 'id'
       @belongsTo 'parent', from: 'groups'
 
+    parentOrSelf: ->
+      if @isParent() then @ else @parent()
+
+    group: -> @
+
     shareableInvitation: ->
       @recordStore.invitations.find(singleUse:false, groupId: @id)[0]
 
@@ -154,7 +159,7 @@ angular.module('loomioApp').factory 'GroupModel', (DraftableModel, AppConfig) ->
         _.each @memberships(), (m) -> m.remove()
 
     uploadPhoto: (file, kind) =>
-      @remote.upload("#{@key}/upload_photo/#{kind}", file)
+      @remote.upload("#{@key}/upload_photo/#{kind}", file, {}, ->)
 
     hasNoSubscription: ->
       !@subscriptionKind?

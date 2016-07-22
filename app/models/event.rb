@@ -1,4 +1,6 @@
 class Event < ActiveRecord::Base
+  include HasTimeframe
+
   KINDS = %w[new_discussion discussion_title_edited discussion_description_edited discussion_edited discussion_moved
              new_comment new_motion new_vote motion_close_date_edited motion_name_edited motion_description_edited
              motion_edited motion_closing_soon motion_closed motion_closed_by_user motion_outcome_created
@@ -25,6 +27,12 @@ class Event < ActiveRecord::Base
   validates_presence_of :eventable
 
   acts_as_sequenced scope: :discussion_id, column: :sequence_id, skip: lambda {|e| e.discussion.nil? || e.discussion_id.nil? }
+
+  def active_model_serializer
+    "Events::#{eventable.class.to_s.split('::').last}Serializer".constantize
+  rescue NameError
+    Events::BaseSerializer
+  end
 
   def notify!(user)
     notifications.create!(user: user) if user

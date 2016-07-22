@@ -88,15 +88,9 @@ ko:
     latest: 최신
     unread: 읽지않음
     closing_in: 닫는중
-  session_form:
-    email_label: '이메일:'
-    password_label: '비밀번호:'
-    remember_me: 로그인 상태 유지
-    sign_in: 로그인
   comment_form:
     aria_label: 댓글 추가하기
     attachments:
-      aria_label: 파일 첨부하기
       remove_attachment: 첨부파일 삭제
     messages:
       created: 댓글을 추가하였습니다.
@@ -113,25 +107,19 @@ ko:
       label: 저장하기
     private_privacy_notice: '작성하신 댓글은 {{groupName}} 그룹만 볼 수 있습니다.'
     public_privacy_notice: 작성하신 댓글은 웹 상의 모두가 볼 수 있습니다.
-  navbar:
+  sidebar:
     recent: 최신
     unread: 읽지않음
-    groups: 그룹
+    muted: 알림 비활성화
+    edit_profile: 프로필 편집
+    email_settings: 이메일 설정
+    help: 도움말
+    sign_out: 로그아웃
+  navbar:
     recent_title: 대시보드로 이동
     unread_title: 읽지 않은 활동 보기
-    groups_title: 활동중인 그룹 보기
     start_thread: 새 쓰레드 만들기
     notifications: 알림 패널
-    user_actions: 사용자 액션
-    user_options:
-      label: 사용자 옵션
-      contact_us: 연락하기
-      new_thread: 새로운 쓰레드
-      new_group: 새 그룹
-      profile: 프로필
-      email_settings: 이메일 설정
-      help: 도움말
-      sign_out: 로그아웃
     search:
       no_results: 쓰레드가 없습니다.
       close: 검색패널 닫기
@@ -212,13 +200,10 @@ ko:
     start_a_proposal: 제안 시작하기
     edit_proposal: 제안 수정하기
     what_does_a_proposal_do: 제안은 특정한 행동방침에 대해 다른 사람들이 어떻게 생각하는지를 보여줍니다.
-    editing_title_and_description_forbidden: '투표를 받은 제안은 제목이나 내용을 고칠 수 없습니다. 내용이 변경되었다면, 이 제안을 닫고 새로 만드세요.'
-    title_placeholder: '예: 달 탐사'
     title_label: 제목
     closes_at_label: 에 종료됩니다.
     closes: 종료
     details_label: 세부사항
-    details_placeholder: '모든 사람들이 동의하거나 아니면 동의하지 않음이 어떤 뜻인지 정확히 알 수 있도록, 충분하고 자세하게 설명해주세요.'
   discussion_record:
     created: '해당 쓰레드 {{title}}은 {{groupName}}에 성공적으로 생성되었습니다.'
     updated: '제목을 {{title}}으로 바꾸었습니다.'
@@ -264,9 +249,6 @@ ko:
       단체들에게 자신들에게 적합한 정책plan을 선택해달라고 요청했습니다.</p>
     submit: 계획을 보여주세요
   group_welcome_modal:
-    heading: 새로운 그룹에 오신것을 환영합니다
-    first_step: '당신은  단체의 <strong>코디네이터</strong>인데, 관리자host와 비슷합니다. 비디오를 시청하시고, 예제 threads를 확인하세요.'
-    second_step: '준비되면, <strong>사람들을 초대하세요</strong>.'
     ok_got_it: '네, 알겠습니다!'
   group_cover_modal:
     heading: 새로운 커버 사진
@@ -385,7 +367,6 @@ ko:
     standard: 일반
     plus: 게다가
     free_trial_html: '<span>30일 무료 시범사용</span>후 가격 체계를 선택하세요. 지금은 크레딧 카드 등록이 필요없습니다.'
-    get_started_for_free: 무료로 시작하기
     support_before: 하게 되어 기쁩니다.
     support_link: 당신과 이야기하게 되어
     support_after: 시범 사용 기간 연장에 대해서나 혹은 무엇이든 물어보세요.
@@ -393,12 +374,8 @@ ko:
     unlimited_members: 멤버 제한 없음
     unlimited_decisions: 의사결정 횟수 제한 없음
     email_support: 이메일 지원
-    standard_price_html: |
-      <strong>$19</strong>미국달러/월<br><span>또는 </span> $190 미국달러/년
     plus_body: '일반 플랜의 모든 사항, 게다가:'
     premium_support: 프리미엄 지원
-    plus_price_html: |
-      <strong>$179</strong>미국달러/월<br><span>또는 </span> $1790 미국달러/년
     select: 선택
   subscription_success_modal:
     heading: 기부해 주셔서 감사드립니다.
@@ -570,6 +547,8 @@ ko:
     aria_label: 대시보드
     options:
       aria_label: 대시보드 필터링 옵션
+    no_groups:
+      or: 혹은
     no_threads:
       show_all: 최근 주제가 없습니다.
       show_participating: '최근 어떤 주제에도 참여하지 않았습니다. '
@@ -617,6 +596,8 @@ ko:
     no_threads: '이야! inbox의 모든 주제를 읽었군요.'
     unread_threads: 읽지 않은 쓰레드
     view_more: 더보기
+    no_groups:
+      or: 혹은
   groups_page:
     page_header: 내가 속한 그룹
   discussion:

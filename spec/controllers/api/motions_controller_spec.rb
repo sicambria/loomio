@@ -54,8 +54,8 @@ describe API::MotionsController do
   end
 
   describe 'index' do
-    let(:another_discussion)    { create :discussion }
-    let(:another_motion)      { create :motion, discussion: another_discussion }
+    let(:another_discussion) { create :discussion }
+    let(:another_motion) { create :motion, discussion: another_discussion }
 
     before do
       motion; another_motion
@@ -91,6 +91,11 @@ describe API::MotionsController do
   end
 
   describe 'closed' do
+
+    let(:public_group)       { create :group, is_visible_to_public: true }
+    let(:public_discussion)  { create :discussion, group: public_group, private: false }
+    let(:public_motion)      { create :motion, discussion: public_discussion }
+
     it 'returns closed motions for a group' do
       my_vote
       MotionService.close(motion)
@@ -110,6 +115,15 @@ describe API::MotionsController do
       expect(group_ids).to_not include another_group.id
       expect(discussion_ids).to_not include private_discussion.id
       expect(motion_ids).to_not include another_motion.id
+    end
+
+    it 'returns public motions' do
+      MotionService.close(public_motion)
+      get :closed, group_key: public_group.key, format: :json
+      expect(response.status).to eq 200
+      json = JSON.parse(response.body)
+      motion_ids = json['proposals'].map { |p| p['id'] }
+      expect(motion_ids).to include public_motion.id
     end
 
     it 'does not return votes if I havent voted' do
@@ -230,6 +244,19 @@ describe API::MotionsController do
         post :create, motion: motion_params
         json = JSON.parse(response.body)
         expect(json['discussions'][0]['discussion_reader_id']).to be_present
+      end
+
+      describe 'mentioning' do
+        it 'mentions appropriate users' do
+          group.add_member! another_user
+          motion_params[:description] = "Hello, @#{another_user.username}!"
+          expect { post :create, motion: motion_params, format: :json }.to change { Event.where(kind: :user_mentioned).count }.by(1)
+        end
+
+        it 'does not mention users not in the group' do
+          motion_params[:description] = "Hello, @#{another_user.username}!"
+          expect { post :create, motion: motion_params, format: :json }.to_not change { Event.where(kind: :user_mentioned).count }
+        end
       end
     end
 

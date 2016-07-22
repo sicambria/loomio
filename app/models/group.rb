@@ -57,15 +57,20 @@ class Group < ActiveRecord::Base
   }
 
   scope :active_discussions_since, ->(time) {
-    includes(:discussions).where('discussions.last_comment_at > ?', time).references(:discussions)
+    includes(:discussions).where('discussions.last_activity_at > ?', time).references(:discussions)
   }
 
   scope :created_earlier_than, lambda {|time| where('groups.created_at < ?', time) }
 
-  scope :engaged, -> { more_than_n_members(1).
-                       more_than_n_discussions(2).
-                       active_discussions_since(2.month.ago).
-                       parents_only }
+  scope :engaged, ->(since = 2.months.ago) {
+    more_than_n_members(1).
+    more_than_n_discussions(2).
+    active_discussions_since(since)
+  }
+
+  scope :with_analytics, ->(since = 1.month.ago) {
+    where(analytics_enabled: true).engaged(since).joins(:admin_memberships)
+  }
 
   scope :engaged_but_stopped, -> { more_than_n_members(1).
                                    more_than_n_discussions(2).
@@ -150,8 +155,6 @@ class Group < ActiveRecord::Base
            class_name: 'Group',
            foreign_key: :parent_id
 
-  has_many :webhooks, as: :hookable
-
   belongs_to :subscription, dependent: :destroy
 
   delegate :include?, to: :users, prefix: true
@@ -166,7 +169,7 @@ class Group < ActiveRecord::Base
                        styles: {largedesktop: "1400x320#", desktop: "970x200#", card: "460x94#"},
                        default_url: :default_cover_photo
   has_attached_file    :logo,
-                       styles: { card: "67x67", medium: "100x100" },
+                       styles: { card: "67x67#", medium: "100x100#" },
                        default_url: 'default-logo-:style.png'
 
   validates_attachment :cover_photo,
@@ -180,6 +183,7 @@ class Group < ActiveRecord::Base
     file_name: { matches: [/png\Z/i, /jpe?g\Z/i, /gif\Z/i] }
 
   define_counter_cache(:motions_count)            { |group| group.discussions.published.sum(:motions_count) }
+  define_counter_cache(:closed_motions_count)     { |group| group.motions.closed.count }
   define_counter_cache(:discussions_count)        { |group| group.discussions.published.count }
   define_counter_cache(:public_discussions_count) { |group| group.discussions.visible_to_public.count }
   define_counter_cache(:memberships_count)        { |group| group.memberships.count }
@@ -363,36 +367,23 @@ class Group < ActiveRecord::Base
   end
 
   def add_member!(user, inviter=nil)
-    find_or_create_membership(user, inviter)
-  end
-
-  def add_members!(users, inviter=nil)
-    users.map do |user|
-      add_member!(user, inviter)
+    begin
+      save!
+      memberships.find_or_create_by(user: user) { |m| m.inviter = inviter }
+    rescue ActiveRecord::RecordNotUnique
+      retry
     end
   end
 
+  def add_members!(users, inviter=nil)
+    users.map { |user| add_member!(user, inviter) }
+  end
+
   def add_admin!(user, inviter = nil)
-    membership = find_or_create_membership(user, inviter)
-    membership.make_admin! && save
-    self.creator = user if creator.blank?
-    membership
-  end
-
-  def add_default_content!
-    update default_group_cover: DefaultGroupCover.sample, subscription: Subscription.new_trial
-    ExampleContent.add_to_group(self)
-  end
-
-  def find_or_create_membership(user, inviter)
-    begin
-      Membership.find_or_create_by(user_id: user.id, group_id: id) do |m|
-        m.group = self
-        m.user = user
-        m.inviter = inviter
-      end
-    rescue ActiveRecord::RecordNotUnique
-      retry
+    add_member!(user, inviter).tap do |m|
+      m.make_admin!
+      update(creator: user) if creator.blank?
+      reload
     end
   end
 

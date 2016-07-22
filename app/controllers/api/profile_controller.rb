@@ -21,12 +21,18 @@ class API::ProfileController < API::RestfulController
   end
 
   def change_password
-    service.change_password(current_user_params) { sign_in resource, bypass: true }
+    service.change_password(current_user_params) { bypass_sign_in resource }
     respond_with_resource
   end
 
   def deactivate
     service.deactivate(current_user_params)
+    respond_with_resource
+  end
+
+  def save_experience
+    raise ActionController::ParameterMissing.new(:experience) unless params[:experience]
+    service.save_experience user: current_user, actor: current_user, params: { experience: params[:experience] }
     respond_with_resource
   end
 

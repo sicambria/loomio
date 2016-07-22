@@ -32,13 +32,13 @@ ca:
     edit_comment: Edita el comentari
     delete_comment: Eliminar comentari
     confirm_delete_message: Estàs segur de que vols eliminar aquest comentari?
-  navbar:
+  sidebar:
     unread: No llegit
-    groups: Grups
-    user_options:
-      new_group: Nou grup
-      profile: Perfil
-      help: Ajuda
+    explore: Explorar grups públics
+    email_settings: Configuració de correu electrònic
+    help: Ajuda
+    sign_out: Tanca la sessió
+  navbar:
     search:
       placeholder: Cerca
       discussions: Discussions
@@ -89,9 +89,6 @@ ca:
       label: Opcions
     leave_group:
       title: Deixar el grup
-  group_help_card:
-    ten_tips_article_link: 'https://loomio.wordpress.com/2015/08/17/10-consejos-para-tomar-decisiones-con-loomio/?frame-nonce=7455d1c7aa&preview=true&iframe=true'
-    nine_ways_to_use_proposals_link: 'https://loomio.wordpress.com/2015/08/17/9-formas-de-utilizar-propuestas-en-loomio-para-convertir-conversaciones-en-accion/?frame-nonce=7455d1c7aa&preview=true&iframe=true'
   membership_requests_page:
     approve: Aprovar
     ignore: Ignorar
@@ -117,8 +114,13 @@ ca:
     locale_label: Idioma
   dashboard_page:
     aria_label: Panell
+    no_groups:
+      or: o
     threads_from:
       today: Avui
+  inbox_page:
+    no_groups:
+      or: o
   thread_group:
     aria_label: Nom del grup
   delete_comment_dialog:
