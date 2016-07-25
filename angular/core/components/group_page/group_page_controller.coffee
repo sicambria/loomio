@@ -1,5 +1,7 @@
-angular.module('loomioApp').controller 'GroupPageController', ($rootScope, $location, $routeParams, Records, CurrentUser, MessageChannelService, AbilityService, AppConfig, LmoUrlService, PaginationService, ModalService, GroupWelcomeModal) ->
-  $rootScope.$broadcast 'currentComponent', {page: 'groupPage'}
+angular.module('loomioApp').controller 'GroupPageController', ($rootScope, $location, $routeParams, $scope, Records, Session, MessageChannelService, AbilityService, AppConfig, LmoUrlService, PaginationService, ModalService, SubscriptionSuccessModal, GroupWelcomeModal) ->
+  $rootScope.$broadcast 'currentComponent', {page: 'groupPage', key: $routeParams.key}
+
+  $scope.$on 'joinedGroup', => @handleWelcomeModal()
 
   # allow for chargify reference, which comes back #{groupKey}|#{timestamp}
   $routeParams.key = $routeParams.key.split('|')[0]
@@ -9,6 +11,7 @@ angular.module('loomioApp').controller 'GroupPageController', ($rootScope, $loca
     if AbilityService.isLoggedIn()
       MessageChannelService.subscribeToGroup(@group)
       Records.drafts.fetchFor(@group)
+      @handleSubscriptionSuccess()
       @handleWelcomeModal()
 
     maxDiscussions = if AbilityService.canViewPrivateContent(@group)
@@ -51,17 +54,22 @@ angular.module('loomioApp').controller 'GroupPageController', ($rootScope, $loca
   @openUploadLogoForm = ->
     ModalService.open LogoPhotoForm, group: => @group
 
+  @handleSubscriptionSuccess = ->
+    if (AppConfig.chargify or AppConfig.environment == 'development') and $location.search().chargify_success?
+      @subscriptionSuccess = true
+      @group.subscriptionKind = 'paid' # incase the webhook is slow
+      $location.search 'chargify_success', null
+      ModalService.open SubscriptionSuccessModal
+
   @showWelcomeModal = ->
     @group.isParent() and
-    Session.user().isMemberOf(@group)
+    Session.user().isMemberOf(@group) and
+    !@subscriptionSuccess and
+    !Session.user().hasExperienced("welcomeModal", @group)
 
   @handleWelcomeModal = =>
     if @showWelcomeModal()
       ModalService.open GroupWelcomeModal, group: => @group
       Records.memberships.saveExperience("welcomeModal", Session.user().membershipFor(@group))
-
-  @handlePaymentModal = =>
-    if @showPaymentModal()
-      ModalService.open(ChoosePlanModal, group: => @group)
 
   return

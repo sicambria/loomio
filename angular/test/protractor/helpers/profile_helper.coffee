@@ -1,5 +1,9 @@
 module.exports = new class ProfileHelper
 
+  visitProfilePage: ->
+    element(By.css('.navbar-user-options button')).click()
+    element(By.css('.navbar-user-options__profile-link')).click()
+
   visitUserPage: (username) ->
     browser.get("u/#{username}")
 

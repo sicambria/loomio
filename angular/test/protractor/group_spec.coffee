@@ -53,7 +53,7 @@ describe 'Group Page', ->
         staticPage.fillIn '#user_password', 'complex_password'
         staticPage.fillIn '#user_password_confirmation', 'complex_password'
         staticPage.click '#create-account'
-        page.expectElement '.sidebar__content'
+        page.expectElement '.lmo-navbar__item--user'
         page.expectElement '.group-theme__name', 'Open Dirty Dancing Shoes'
 
       it 'should allow you to request to join a closed group', ->
@@ -66,13 +66,13 @@ describe 'Group Page', ->
 
       it 'should reload a closed group after logging in', ->
         page.loadPath 'view_closed_group_as_visitor'
-        page.click '.navbar__sign-in'
+        page.click '.lmo-navbar__sign-in'
         page.fillIn '#user-email', 'jennifer_grey@example.com'
         page.fillIn '#user-password', 'gh0stmovie'
         page.click '.sign-in-form__submit-button'
         page.expectText '.group-theme__name', 'Closed Dirty Dancing Shoes'
         page.expectText '.thread-previews-container', 'This thread is private'
-        page.expectElement '.sidebar__content'
+        page.expectElement '.navbar-user-options__user-profile-icon'
 
       it 'should prompt for login for secret group', ->
         page.loadPath 'view_secret_group_as_visitor'
@@ -80,7 +80,7 @@ describe 'Group Page', ->
         page.fillIn '#user-password', 'gh0stmovie'
         page.click '.sign-in-form__submit-button'
         page.expectText '.group-theme__name', 'Secret Dirty Dancing Shoes'
-        page.expectElement '.sidebar__content'
+        page.expectElement '.navbar-user-options__user-profile-icon'
 
       it 'does not allow mark as read or mute', ->
         page.loadPath('view_open_group_as_visitor')
@@ -332,7 +332,9 @@ describe 'Group Page', ->
                  '.group-page-actions__leave-group',
                  '.leave-group-form__submit')
       page.expectFlash('You have left this group')
-      page.expectText('.dashboard-page__no-groups', "You don't have any recent threads because you are not a member of any groups.")
+      # click 'groups' from nav
+      page.click('.groups-item')
+      page.expectNoText('.groups-page__groups', 'Dirty Dancing Shoes')
 
     it 'prevents last coordinator from leaving the group', ->
       # click leave group from the group actions downdown
@@ -353,7 +355,8 @@ describe 'Group Page', ->
                  '.group-page-actions__archive-group',
                  '.archive-group-form__submit')
       page.expectFlash('This group has been deactivated')
-      page.expectText('.dashboard-page__no-groups', "You don't have any recent threads because you are not a member of any groups.")
+      page.click('.groups-item')
+      page.expectNoText('.groups-page__groups', 'Dirty Dancing Shoes')
 
   describe 'handling drafts', ->
     it 'handles empty draft privacy gracefully', ->

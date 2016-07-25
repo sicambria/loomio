@@ -3,7 +3,6 @@ angular.module('loomioApp').factory 'GroupWelcomeModal', ->
   size: 'group-welcome-modal'
   controller: ($scope, group, AppConfig, UserHelpService, AbilityService) ->
     $scope.group = group
-    $scope.showVideo = AppConfig.loadVideos
 
     $scope.helpVideo = ->
       UserHelpService.helpVideoUrl()

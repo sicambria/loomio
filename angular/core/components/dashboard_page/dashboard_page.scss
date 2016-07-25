@@ -20,8 +20,9 @@
   padding: 0 $cardPaddingSize;
 }
 
-.dashboard-page__no-threads, .dashboard-page__no-groups {
-  margin-left: $cardPaddingSize;
+.dashboard-page__no-threads {
+  text-align: center;
+  margin-left: 13px;
 }
 
 .dashboard-page__footer {

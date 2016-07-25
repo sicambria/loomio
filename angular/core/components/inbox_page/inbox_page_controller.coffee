@@ -1,4 +1,4 @@
-angular.module('loomioApp').controller 'InboxPageController', ($scope, $rootScope, Records, Session, AppConfig, LoadingService, ThreadQueryService, ModalService, GroupForm) ->
+angular.module('loomioApp').controller 'InboxPageController', ($scope, $rootScope, Records, Session, AppConfig, LoadingService, ThreadQueryService) ->
   $rootScope.$broadcast('currentComponent', {page: 'inboxPage'})
   $rootScope.$broadcast('setTitle', 'Inbox')
   $rootScope.$broadcast('analyticsClearGroup')
@@ -26,11 +26,5 @@ angular.module('loomioApp').controller 'InboxPageController', ($scope, $rootScop
 
   @moreForThisGroup = (group) ->
     @views.groups[group.key].length() > @threadLimit
-
-  @noGroups = ->
-    !Session.user().hasAnyGroups()
-
-  @startGroup = ->
-    ModalService.open GroupForm, group: -> Records.groups.build()
 
   return

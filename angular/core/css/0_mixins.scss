@@ -119,12 +119,6 @@ $boxMediumSize: 50px;
   height: $boxMediumSize;
 }
 
-$boxMediumCircularSize: 48px;
-@mixin boxMediumCircular {
-  width: $boxMediumCircularSize;
-  height: $boxMediumCircularSize;
-}
-
 $boxLargeSize: 80px;
 @mixin boxLarge {
   width: $boxLargeSize;
